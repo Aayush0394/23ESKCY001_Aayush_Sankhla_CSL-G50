@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Backup Codes | CSL-G50{% endblock %}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header text-center py-3">
+        <h4 class="mb-0">Your Backup Codes</h4>
+        <small class="text-warning">Save these codes now – they will not be shown again!</small>
+    </div>
+    <div class="card-body p-4 text-center">
+        <p class="text-muted">Each code can be used only once if you lose access to your authenticator app.</p>
+        
+        <div class="my-4">
+            {% for code in codes %}
+                <span class="backup-code">{{ code }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="alert alert-warning small text-start">
+            <strong>Important:</strong>
+            <ul class="mb-0">
+                <li>Store these codes in a safe place (password manager, printed paper, etc.).</li>
+                <li>Do not share them with anyone.</li>
+                <li>Each code is single-use and will be deleted after successful login.</li>
+            </ul>
+        </div>
+
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">I have saved the codes – Go to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

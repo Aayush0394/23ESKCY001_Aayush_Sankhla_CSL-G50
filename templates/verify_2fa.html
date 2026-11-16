@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Verify 2FA | CSL-G50{% endblock %}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header text-center py-3">
+        <h4 class="mb-0">Two-Factor Authentication</h4>
+        <small class="text-muted">Enter the 6-digit code from Google Authenticator</small>
+    </div>
+    <div class="card-body p-4">
+        <p class="text-center text-muted">Logging in as <strong>{{ username }}</strong></p>
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Authentication Code</label>
+                <input type="text" name="code" class="form-control text-center fs-4" 
+                       maxlength="12" placeholder="000000" required autofocus
+                       style="letter-spacing: 4px;">
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="use_backup" id="useBackup">
+                <label class="form-check-label" for="useBackup">
+                    Use a backup / recovery code instead
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Verify</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('logout') }}" class="text-muted small">Cancel &amp; return to login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

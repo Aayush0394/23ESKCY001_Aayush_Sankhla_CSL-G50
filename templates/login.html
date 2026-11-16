@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Login | CSL-G50{% endblock %}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header text-center py-3">
+        <h4 class="mb-0">Login</h4>
+        <small class="text-muted">Web login with hashed passwords + TOTP</small>
+    </div>
+    <div class="card-body p-4">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <hr class="my-4 border-light-subtle">
+        <p class="text-center mb-0">
+            Don't have an account? <a href="{{ url_for('register') }}" class="text-info">Register</a>
+        </p>
+        <p class="text-center mt-2 small text-muted">
+            Demo account: <code>demo</code> / <code>demo123</code>
+        </p>
+    </div>
+</div>
+{% endblock %}

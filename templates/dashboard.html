@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | CSL-G50{% endblock %}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h4 class="mb-0">Dashboard</h4>
+    </div>
+    <div class="card-body p-4">
+        <p>Welcome, <strong>{{ username }}</strong>!</p>
+        <p class="text-muted small">Account created: {{ user.created_at[:19] if user.created_at else 'N/A' }}</p>
+
+        <hr class="border-light-subtle">
+
+        <h5>Security Status</h5>
+        {% if user.otp_enabled %}
+            <div class="alert alert-success d-flex align-items-center">
+                <span class="me-2">✅</span>
+                <div>
+                    <strong>Two-Factor Authentication is ENABLED</strong><br>
+                    <small>Your account is protected by TOTP (Google Authenticator compatible).</small>
+                </div>
+            </div>
+            <p class="small text-muted">Remaining backup codes: {{ user.backup_codes|length }}</p>
+            <form method="POST" action="{{ url_for('regenerate_backup') }}" class="d-inline">
+                <button type="submit" class="btn btn-outline-warning btn-sm"
+                        onclick="return confirm('This will invalidate all existing backup codes. Continue?')">
+                    Regenerate Backup Codes
+                </button>
+            </form>
+            <form method="POST" action="{{ url_for('disable_2fa') }}" class="d-inline ms-2">
+                <button type="submit" class="btn btn-outline-danger btn-sm"
+                        onclick="return confirm('Disable 2FA? This reduces account security.')">
+                    Disable 2FA
+                </button>
+            </form>
+        {% else %}
+            <div class="alert alert-warning d-flex align-items-center">
+                <span class="me-2">⚠️</span>
+                <div>
+                    <strong>Two-Factor Authentication is DISABLED</strong><br>
+                    <small>Enable it to protect your account with a second factor.</small>
+                </div>
+            </div>
+            <a href="{{ url_for('enable_2fa') }}" class="btn btn-primary">
+                Enable Two-Factor Authentication
+            </a>
+        {% endif %}
+
+        <hr class="border-light-subtle mt-4">
+        <h6 class="text-muted">Project Info</h6>
+        <ul class="small text-muted">
+            <li>Project Code: <code>CSL-G50</code></li>
+            <li>Linked Experiment: Exp 8 – Secure Storage, Transmission &amp; Digital Signature</li>
+            <li>Password hashing: Werkzeug (PBKDF2)</li>
+            <li>TOTP: pyotp (RFC 6238) – Google Authenticator compatible</li>
+            <li>Backup codes: SHA-256 hashed, one-time use</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
